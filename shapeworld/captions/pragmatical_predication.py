@@ -57,9 +57,13 @@ class PragmaticalPredication(object):
         return util.all_and_any(predicate.pred_disagreement(entity=entity, **kwargs) for entity in self.agreeing)
 
     def get_sub_predications(self):
-        for predication in self.sub_predications:
-            yield predication
-            yield predication.get_sub_predications()
+        for sub_predication in self.sub_predications:
+            yield sub_predication
+            # print(sub_predication)
+            # yield from sub_predication.get_sub_predications()
+            # Python 2 version of "yield from":
+            for sub_sub_predication in sub_predication.get_sub_predications():
+                yield sub_sub_predication
 
     # def redundant_sub_predications(self):
     #     for m in range(len(self.sub_predications)):
